@@ -1,3 +1,7 @@
+<script setup lang="ts">
+  import {RouterLink} from "vue-router";
+</script>
+
 <template>
   <nav class="navbar">
     <ul>
@@ -14,6 +18,8 @@
   border-radius: 0.5rem;
 
 }
+
+html { scroll-behavior: smooth;}
 
 .navbar ul {
   list-style: none;
@@ -37,6 +43,6 @@
 }
 
 .navbar a:hover {
-  color: #218838;
+  color: #008000;
 }
 </style>

@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
-const invoices = ref([
-  { id: 1, invoiceNumber: 101, client: 'Narcis', date: '2024-12-03', items: [{ iName: 'Item A', quantity: 2, amount: 50 }], totalAmount: 100 },
-  { id: 2, invoiceNumber: 102, client: 'Benjamin', date: '2024-12-03', items: [{ iName: 'Item B', quantity: 3, amount: 30 }], totalAmount: 90 },
-]);
+import { invoices } from '@/ts/invoices';
 
 const invoiceNumber = ref(0);
 const selectClient = ref('');
 const items = ref([{ iName: '', quantity: 0, amount: 0 }]);
 const totalAmount = ref(0);
 const date = ref(new Date().toISOString().split('T')[0]);
-
 const selectedInvoiceId = ref<number | null>(null);
 
 function calculateTotal() {
@@ -72,58 +67,17 @@ function resetForm() {
 
 <template>
   <div>
-    <section id="create">
-      <form @submit.prevent="addOrUpdateInvoice">
-        <h2>{{ selectedInvoiceId !== null ? "Edit Invoice" : "Add New Invoice" }}</h2>
-        <div>
-          <label for="invoiceNumber">Invoice Number:</label>
-          <input type="number" id="invoiceNumber" v-model="invoiceNumber" />
-        </div>
-        <div>
-          <label for="client">Client:</label>
-          <select id="client" v-model="selectClient">
-            <option value="Narcis">Narcis</option>
-            <option value="Benjamin">Benjamin</option>
-            <option value="John">John</option>
-          </select>
-        </div>
-        <div>
-          <label for="date">Date:</label>
-          <input type="date" id="date" v-model="date" />
-        </div>
-        <div>
-          <label>Items:</label>
-          <div v-for="(item, index) in items" :key="index">
-            <label>Item Name:</label>
-            <input type="text" v-model="item.iName" placeholder="Item Name" />
-            <label>Quantity:</label>
-            <input type="number" v-model="item.quantity" @input="calculateTotal" />
-            <label>Amount:</label>
-            <input type="number" v-model="item.amount" @input="calculateTotal" />
-          </div>
-          <button type="button" @click="items.push({ iName: '', quantity: 0, amount: 0 })">Add Item</button>
-        </div>
-        <div>
-          <label for="totalAmount">Total Amount:</label>
-          <input type="number" id="totalAmount" v-model="totalAmount" readonly />
-        </div>
-        <button type="submit">{{ selectedInvoiceId !== null ? "Update Invoice" : "Add Invoice" }}</button>
-        <button type="button" @click="resetForm">Reset</button>
-      </form>
-    </section>
-
+    <form @submit.prevent="addOrUpdateInvoice">
+    </form>
     <hr />
-
-    <section id="list">
-      <h2>Invoices List</h2>
-      <ul>
-        <li v-for="invoice in invoices" :key="invoice.id">
-          <strong>{{ invoice.invoiceNumber }}</strong> - {{ invoice.client }} - {{ invoice.date }} - ${{ invoice.totalAmount }}
-          <button @click="editInvoice(invoice.id)">Edit</button>
-          <button @click="deleteInvoice(invoice.id)">Delete</button>
-        </li>
-      </ul>
-    </section>
+    <h2>Invoices List</h2>
+    <ul>
+      <li v-for="invoice in invoices" :key="invoice.id">
+        <strong>{{ invoice.invoiceNumber }}</strong> - {{ invoice.client }} - {{ invoice.date }} - ${{ invoice.totalAmount }}
+        <button @click="editInvoice(invoice.id)">Edit</button>
+        <button @click="deleteInvoice(invoice.id)">Delete</button>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -261,3 +215,4 @@ div[v-for] button {
   flex-basis: 100%;
 }
 </style>
+
